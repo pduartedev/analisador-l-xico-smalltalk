@@ -4,7 +4,7 @@ Este projeto implementa um analisador léxico para a linguagem Smalltalk utiliza
 
 ## Estrutura do Projeto
 
-˜˜˜
+"""
 /
 
 |-- doc/                          # Enunciado do projeto
@@ -20,7 +20,7 @@ Este projeto implementa um analisador léxico para a linguagem Smalltalk utiliza
 │   └── samples/                  # Exemplos de código Smalltalk para testes
 │       └── sample1.st
 └── README.md                     # Este arquivo
-˜˜˜
+"""
 
 ## Tokens Reconhecidos
 
