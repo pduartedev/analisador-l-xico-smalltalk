@@ -1,0 +1,148 @@
+options {
+  STATIC = false;
+  DEBUG_PARSER = false;
+  DEBUG_LOOKAHEAD = false;
+  DEBUG_TOKEN_MANAGER = false;
+}
+
+PARSER_BEGIN(SmallTalkLexer)
+package lexical;
+
+public class SmallTalkLexer {
+  public static void main(String args[]) throws ParseException {
+    SmallTalkLexer lexer;
+    if (args.length == 0) {
+      System.out.println("Smalltalk Lexical Analyzer: Reading from standard input...");
+      lexer = new SmallTalkLexer(System.in);
+    } else if (args.length == 1) {
+      System.out.println("Smalltalk Lexical Analyzer: Reading from file " + args[0]);
+      try {
+        lexer = new SmallTalkLexer(new java.io.FileInputStream(args[0]));
+      } catch (java.io.FileNotFoundException e) {
+        System.out.println("File " + args[0] + " not found.");
+        return;
+      }
+    } else {
+      System.out.println("Smalltalk Lexical Analyzer: Usage is one of:");
+      System.out.println("         java SmallTalkLexer < inputfile");
+      System.out.println("OR");
+      System.out.println("         java SmallTalkLexer inputfile");
+      return;
+    }
+    
+    try {
+      lexer.Start();
+    } catch (ParseException e) {
+      System.out.println("Syntax Error: " + e.getMessage());
+    }
+  }
+}
+
+PARSER_END(SmallTalkLexer)
+
+// Ignorando espaços em branco e comentários
+SKIP : {
+  " " | "\t" | "\n" | "\r" | "\f"
+  | <COMMENT: "\"" (~["\""])* "\"">
+}
+
+// Definição dos tokens
+TOKEN : {
+  // Palavras-chave
+  <KEYWORD: "self" | "super" | "true" | "false" | "nil" | "thisContext">
+
+  // Delimitadores e operadores
+  | <LPAREN: "(">
+  | <RPAREN: ")">
+  | <LBRACKET: "[">
+  | <RBRACKET: "]">
+  | <LBRACE: "{">
+  | <RBRACE: "}">
+  | <DOT: ".">
+  | <SEMICOLON: ";">
+  | <COLON: ":">
+  | <ASSIGNMENT: ":=">
+  | <RETURN: "^">
+  | <HASH: "#">
+  | <PIPE: "|">
+  | <DOLLAR: "$">
+  
+  // Operadores aritméticos e lógicos
+  | <PLUS: "+">
+  | <MINUS: "-">
+  | <MULTIPLY: "*">
+  | <DIVIDE: "/">
+  | <LESS: "<">
+  | <GREATER: ">">
+  | <LESS_EQUAL: "<=">
+  | <GREATER_EQUAL: ">=">
+  | <EQUALS: "=">
+  | <NOT_EQUAL: "~=">
+  
+  // Números
+  | <INTEGER: (["0"-"9"])+>
+  | <FLOAT: (["0"-"9"])+ "." (["0"-"9"])+>
+  
+  // Strings
+  | <STRING: "'" (~["'"] | "''")* "'">
+  
+  // Caractere
+  | <CHARACTER: "$" ~[]>
+  
+  // Símbolos
+  | <SYMBOL: "#" (<IDENTIFIER> | <STRING>)>
+  
+  // Arrays
+  | <ARRAY_START: "#(">
+  
+  // Identificadores
+  | <IDENTIFIER: ["a"-"z", "A"-"Z"] (["a"-"z", "A"-"Z", "0"-"9", "_"])*>
+}
+
+// Análise léxica principal
+void Start() :
+{}
+{
+  (Token())* <EOF>
+}
+
+void Token() :
+{
+  Token t;
+}
+{
+  (
+    t = <KEYWORD> { System.out.println("KEYWORD " + t.image); } |
+    t = <LPAREN> { System.out.println("LPAREN " + t.image); } |
+    t = <RPAREN> { System.out.println("RPAREN " + t.image); } |
+    t = <LBRACKET> { System.out.println("LBRACKET " + t.image); } |
+    t = <RBRACKET> { System.out.println("RBRACKET " + t.image); } |
+    t = <LBRACE> { System.out.println("LBRACE " + t.image); } |
+    t = <RBRACE> { System.out.println("RBRACE " + t.image); } |
+    t = <DOT> { System.out.println("DOT " + t.image); } |
+    t = <SEMICOLON> { System.out.println("SEMICOLON " + t.image); } |
+    t = <COLON> { System.out.println("COLON " + t.image); } |
+    t = <ASSIGNMENT> { System.out.println("ASSIGNMENT " + t.image); } |
+    t = <RETURN> { System.out.println("RETURN " + t.image); } |
+    t = <HASH> { System.out.println("HASH " + t.image); } |
+    t = <PIPE> { System.out.println("PIPE " + t.image); } |
+    t = <DOLLAR> { System.out.println("DOLLAR " + t.image); } |
+    t = <PLUS> { System.out.println("PLUS " + t.image); } |
+    t = <MINUS> { System.out.println("MINUS " + t.image); } |
+    t = <MULTIPLY> { System.out.println("MULTIPLY " + t.image); } |
+    t = <DIVIDE> { System.out.println("DIVIDE " + t.image); } |
+    t = <LESS> { System.out.println("LESS " + t.image); } |
+    t = <GREATER> { System.out.println("GREATER " + t.image); } |
+    t = <LESS_EQUAL> { System.out.println("LESS_EQUAL " + t.image); } |
+    t = <GREATER_EQUAL> { System.out.println("GREATER_EQUAL " + t.image); } |
+    t = <EQUALS> { System.out.println("EQUALS " + t.image); } |
+    t = <NOT_EQUAL> { System.out.println("NOT_EQUAL " + t.image); } |
+    t = <INTEGER> { System.out.println("INTEGER " + t.image); } |
+    t = <FLOAT> { System.out.println("FLOAT " + t.image); } |
+    t = <STRING> { System.out.println("STRING " + t.image); } |
+    t = <CHARACTER> { System.out.println("CHARACTER " + t.image); } |
+    t = <SYMBOL> { System.out.println("SYMBOL " + t.image); } |
+    t = <ARRAY_START> { System.out.println("ARRAY_START " + t.image); } |
+    t = <IDENTIFIER> { System.out.println("ID " + t.image); }
+  )
+}
