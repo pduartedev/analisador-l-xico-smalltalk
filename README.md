@@ -50,7 +50,7 @@ chmod +x scripts/compile.sh
 ./scripts/compile.sh
 ```
 
-Se necessário, utilize o comando `chmod` para solicitar permissão
+Se necessário, utilize o comando `chmod` para solicitar permissão.
 
 Este script executa o JavaCC para gerar os arquivos Java a partir do arquivo `.jj` e então compila os arquivos Java gerados.
 
