@@ -71,7 +71,7 @@ TOKEN : {
     | < TOKEN_self: "self" >
     | < TOKEN_super: "super" >
 
-    // 2) CHARACTERS E DIGITOS
+
 
 // Análise léxica principal
 void Start() :
