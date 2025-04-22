@@ -70,8 +70,7 @@ TOKEN : {
     | < TOKEN_false: "false" >
     | < TOKEN_self: "self" >
     | < TOKEN_super: "super" >
-
-
+}
 
 // Análise léxica principal
 void Start() :

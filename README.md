@@ -4,7 +4,7 @@ Este projeto implementa um analisador léxico para a linguagem Smalltalk utiliza
 
 ## Estrutura do Projeto
 
-˜˜˜
+```
 /
 
 |-- doc/                          # Enunciado do projeto
@@ -20,7 +20,7 @@ Este projeto implementa um analisador léxico para a linguagem Smalltalk utiliza
 │   └── samples/                  # Exemplos de código Smalltalk para testes
 │       └── sample1.st
 └── README.md                     # Este arquivo
-˜˜˜
+``` 
 
 ## Tokens Reconhecidos
 
@@ -33,8 +33,8 @@ O analisador léxico reconhece os seguintes tipos de tokens:
 - **STRING**: Strings delimitadas por aspas simples (ex: 'texto')
 - **CHARACTER**: Caracteres precedidos por $ (ex: $a)
 - **SYMBOL**: Símbolos precedidos por # (ex: #nome)
-- **Operadores e delimitadores**: 
-  - Parênteses: `(` `)` 
+- **Operadores e delimitadores**:
+  - Parênteses: `(` `)`
   - Colchetes: `[` `]`
   - Chaves: `{` `}`
   - Operadores aritméticos: `+` `-` `*` `/`
