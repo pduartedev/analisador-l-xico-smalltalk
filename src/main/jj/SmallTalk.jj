@@ -1,0 +1,95 @@
+options {
+  STATIC = false;
+  DEBUG_PARSER = false;
+  DEBUG_LOOKAHEAD = false;
+  DEBUG_TOKEN_MANAGER = false;
+}
+
+PARSER_BEGIN(SmallTalkLexer)
+package lexical;
+
+public class SmallTalkLexer {
+  public static void main(String[] args) throws ParseException {
+    SmallTalkLexer lexer;
+    if (args.length == 0) {
+      System.out.println("Smalltalk Lexical Analyzer: Reading from standard input...");
+      lexer = new SmallTalkLexer(System.in);
+    } else if (args.length == 1) {
+      System.out.println("Smalltalk Lexical Analyzer: Reading from file " + args[0]);
+      try {
+        lexer = new SmallTalkLexer(new java.io.FileInputStream(args[0]));
+      } catch (java.io.FileNotFoundException e) {
+        System.out.println("File " + args[0] + " not found.");
+        return;
+      }
+    } else {
+      System.out.println("Smalltalk Lexical Analyzer: Usage is one of:");
+      System.out.println("         java SmallTalkLexer < inputfile");
+      System.out.println("OR");
+      System.out.println("         java SmallTalkLexer inputfile");
+      return;
+    }
+
+    try {
+      lexer.Start();
+    } catch (ParseException e) {
+      System.out.println("Syntax Error: " + e.getMessage());
+    }
+  }
+}
+
+PARSER_END(SmallTalkLexer)
+
+SPECIAL_TOKEN : {
+  < TOKEN_white_space: " " >
+  | < TOKEN_horizontal_tab: "\t" >
+  | < TOKEN_new_line: "\n" >
+  | < TOKEN_carriage_return: "\r" >
+  | < TOKEN_comment: "\"" (~["\""] | "\"\"")* "\"" > // Comentários com qualquer caractere que não seja aspas
+//  | <TOKEN_separator: (<TOKEN_whitespace> | <TOKEN_comment>)* > // TODO: TIRAR DUVIDAS
+}
+
+// Ignorando espaços em branco e comentários
+SKIP : {
+  < TOKEN_white_space>
+  | < TOKEN_horizontal_tab>
+  | < TOKEN_new_line>
+  | < TOKEN_carriage_return>
+  | < TOKEN_comment>
+}
+
+/**
+* Definição dos tokens
+*
+* OBS: A ordem dos tokens foram definidos conforme o documento base.
+*/
+TOKEN : {
+    // 1) Identificadores reservados (ou palavras reservadas)
+    < TOKEN_nil: "nil" >
+    | < TOKEN_true: "true" >
+    | < TOKEN_false: "false" >
+    | < TOKEN_self: "self" >
+    | < TOKEN_super: "super" >
+
+    // 2) CHARACTERS E DIGITOS
+
+// Análise léxica principal
+void Start() :
+{}
+{
+  (Token())* <EOF>
+}
+
+void Token() :
+{
+  Token t;
+}
+{
+////
+    t = <TOKEN_nil> { System.out.println("TOKEN_nil " + t.image); } |
+    t = <TOKEN_true> { System.out.println("TOKEN_true " + t.image); } |
+    t = <TOKEN_false> { System.out.println("TOKEN_false " + t.image); } |
+    t = <TOKEN_self> { System.out.println("TOKEN_self " + t.image); } |
+    t = <TOKEN_super> { System.out.println("TOKEN_super " + t.image); }
+////
+}
