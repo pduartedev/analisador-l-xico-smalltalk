@@ -229,6 +229,9 @@ void Start() :
           case SmallTalkLexerConstants.TOKEN_right_brace:
             System.out.println("TOKEN_right_brace " + t.image);
             break;
+          case SmallTalkLexerConstants.TOKEN_binary_selector:
+            System.out.println("TOKEN_binary_selector " + t.image);
+            break;
           case SmallTalkLexerConstants.TOKEN_return_operator:
             System.out.println("TOKEN_return_operator " + t.image);
             break;
